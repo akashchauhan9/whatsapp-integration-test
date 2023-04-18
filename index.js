@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { doPostRequest } = require('./app/utils/axiosApiCall');
 const { default: axios } = require('axios');
 const app = express().use(bodyParser.json());
-const User = require('./app/models/userModel');
+// const User = require('./app/models/userModel');
 
 require('dotenv')
 const token = process.env.TOKEN;
