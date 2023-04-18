@@ -45,10 +45,9 @@ app.post('/webhook', async (req, res) => {
         console.log("🚀 ~ file: index.js:45 ~ app.post ~ body:", JSON.stringify(body))
 
         if (body.object) {
-
-            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages[0]:", body.entry[0].changes[0].value.messages[0])
-            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages:", body.entry[0].changes[0].value.messages)
             console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes:", body.entry[0].changes)
+            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages:", body.entry[0].changes[0].value.messages)
+            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages[0]:", body.entry[0].changes[0].value.messages[0])
             if (body.entry &&
                 body.entry[0].changes &&
                 body.entry[0].changes[0].value.messages &&
