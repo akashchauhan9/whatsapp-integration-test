@@ -78,7 +78,7 @@ app.post('/webhook', async (req, res) => {
                     // const apiCall = await doPostRequest(url, payload, headers);
                     const apiCall = await axios({
                         method: 'POST',
-                        urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token,
+                        urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
                         data: {
                             messaging_product: 'whatsapp',
                             to: from,
