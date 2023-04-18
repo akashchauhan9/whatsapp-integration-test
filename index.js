@@ -15,11 +15,17 @@ app.listen(8000 || process.env.PORT, () => {
 app.get('/', (req, res) => {res.status(200).json({'message': 'OK'})});
 
 app.get('/webhook', async (req, res) => {
+    console.log("🚀 ~ file: index.js:19 ~ app.get ~ req:", req)
+
     const mode = req.query['hub.mode'];
+    console.log("🚀 ~ file: index.js:21 ~ app.get ~ mode:", mode)
     const challenge = req.query['hub.challenge'];
+    console.log("🚀 ~ file: index.js:23 ~ app.get ~ challenge:", challenge)
     const token = req.query['hub.verify_token'];
+    console.log("🚀 ~ file: index.js:25 ~ app.get ~ token:", token)
 
     if (mode && token) {
+        console.log("🚀 ~ file: index.js:28 ~ app.get ~ mode && token:", mode && token)
         if (mode === 'subscribe' && token === myToken) {
             res.status(200).send(challenge)
         }
