@@ -3,6 +3,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { doPostRequest } = require('./axiosApiCall');
+const { default: axios } = require('axios');
 const app = express().use(bodyParser.json());
 require('dotenv')
 const token = process.env.TOKEN;
@@ -73,7 +74,21 @@ app.post('/webhook', async (req, res) => {
                 };
                 console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
 
-                const apiCall = await doPostRequest(url, payload, headers);
+                // const apiCall = await doPostRequest(url, payload, headers);
+                const apiCall = await axios({
+                    method: 'POST',
+                    urk: 'https://graph.facebook.com/v16.0' + phoneNoId + '/messages?access_token=' + token,
+                    data: {
+                        messaging_product: 'whatsapp',
+                        to: from,
+                        text: {
+                            body: msgBody
+                        }
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
                 res.status(200).send(apiCall)
             }
