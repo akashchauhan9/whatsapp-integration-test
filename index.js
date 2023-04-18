@@ -76,7 +76,7 @@ app.post('/webhook', async (req, res) => {
                     // console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
                     const axiosObj = {
                         method: 'POST',
-                        urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
+                        url: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
                         data: {
                             messaging_product: 'whatsapp',
                             to: from,
