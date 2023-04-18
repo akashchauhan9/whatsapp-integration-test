@@ -69,8 +69,10 @@ app.post('/webhook', async (req, res) => {
                 res.status(200).send(apiCall)
             }
             else {
-                res.status(403)
+                res.status(403).json({ success: false })
             }
+        } else {
+            res.status(403).json({ success: false })
         }
     } catch (error) {
         return res.status(500).json({ error })
