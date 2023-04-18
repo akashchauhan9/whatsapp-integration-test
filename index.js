@@ -49,10 +49,10 @@ app.post('/webhook', async (req, res) => {
             // console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes:", body.entry[0].changes)
             // console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages:", body.entry[0].changes[0].value.messages)
             // console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages[0]:", body.entry[0].changes[0].value.messages[0])
-            if (body.entry &&
-                body.entry[0].changes &&
-                body.entry[0].changes[0].value.messages &&
-                body.entry[0].changes[0].value.messages[0]) {
+            if ((body.entry) &&
+                (body.entry[0].changes) &&
+                (body.entry[0].changes[0].value.messages) &&
+                (body.entry[0].changes[0].value.messages[0])) {
 
                 const phoneNoId = body.entry[0].changes[0].value.metadata.phone_number_id;
                 console.log("🚀 ~ file: index.js:54 ~ app.post ~ phoneNoId:", phoneNoId)
@@ -69,7 +69,7 @@ app.post('/webhook', async (req, res) => {
                             messaging_product: 'whatsapp',
                             to: from,
                             text: {
-                                body: "From Akash" + msgBody
+                                body: "From Akash " + msgBody
                             }
                         },
                         headers: {
@@ -85,14 +85,16 @@ app.post('/webhook', async (req, res) => {
                     return res.status(200).json({ success: true })
                 }
                 else {
-                    console.log("🚀 ~ file: index.js:78 ~ app.post ~ fail:")
-                    return res.status(400).json({ success: false })
+                    console.log("🚀 ~ file: index.js:79 ~ app.post ~ body.entry fail:")
+                    return res.status(400).json({ success: false, msgBody })
                 }
             }
             else {
+                console.log("🚀 ~ file: index.js:82 ~ app.post ~ out fail:")
                 return res.status(403).json({ success: false })
             }
         } else {
+            console.log("🚀 ~ file: index.js:85 ~ app.post ~ out fail:")
             res.status(403).json({ success: false })
         }
     } catch (error) {
