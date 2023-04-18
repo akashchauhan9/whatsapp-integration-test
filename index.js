@@ -91,15 +91,15 @@ app.post('/webhook', async (req, res) => {
             }
             else {
                 console.log("🚀 ~ file: index.js:82 ~ app.post ~ out fail:")
-                return res.status(403).json({ success: false })
+                return res.status(403)
             }
         } else {
             console.log("🚀 ~ file: index.js:85 ~ app.post ~ out fail:")
-            res.status(403).json({ success: false })
+            res.status(403)
         }
     } catch (error) {
         console.log("🚀 ~ file: index.js:99 ~ app.post ~ error:", error)
-        return res.status(500).json({ error })
+        return res.status(500)
     }
 });
 
