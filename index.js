@@ -61,7 +61,7 @@ app.post('/webhook', async (req, res) => {
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
 
-                const url = 'https://graph.facebook.com/v16.0' + phoneNoId + '/messages?access_token=' + token;
+                const url = 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token;
                 const payload = {
                     messaging_product: 'whatsapp',
                     to: from,
@@ -77,7 +77,7 @@ app.post('/webhook', async (req, res) => {
                 // const apiCall = await doPostRequest(url, payload, headers);
                 const apiCall = await axios({
                     method: 'POST',
-                    urk: 'https://graph.facebook.com/v16.0' + phoneNoId + '/messages?access_token=' + token,
+                    urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token,
                     data: {
                         messaging_product: 'whatsapp',
                         to: from,
