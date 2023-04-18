@@ -61,39 +61,46 @@ app.post('/webhook', async (req, res) => {
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
 
-                const url = 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token;
-                const payload = {
-                    messaging_product: 'whatsapp',
-                    to: from,
-                    text: {
-                        body: msgBody
-                    }
-                };
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
-
-                // const apiCall = await doPostRequest(url, payload, headers);
-                const apiCall = await axios({
-                    method: 'POST',
-                    urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token,
-                    data: {
+                if(msgBody === 'Hi' || msgBody === 'Test') {
+                    const url = 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token;
+                    const payload = {
                         messaging_product: 'whatsapp',
                         to: from,
                         text: {
-                            body: msgBody
+                            body: "Hello from Akash"
                         }
-                    },
-                    headers: {
+                    };
+                    const headers = {
                         'Content-Type': 'application/json'
-                    }
-                })
-                console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
-                res.status(200).send(apiCall)
+                    };
+                    console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
+    
+                    // const apiCall = await doPostRequest(url, payload, headers);
+                    const apiCall = await axios({
+                        method: 'POST',
+                        urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token,
+                        data: {
+                            messaging_product: 'whatsapp',
+                            to: from,
+                            text: {
+                                body: msgBody
+                            }
+                        },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token 
+                        }
+                    })
+                    console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
+                    return res.status(200).send(apiCall)
+                }
+                else {
+                    console.log("🚀 ~ file: index.js:78 ~ app.post ~ fail:")
+                    return res.status(400).send('fail')
+                }
             }
             else {
-                res.status(403).json({ success: false })
+                return res.status(403).json({ success: false })
             }
         } else {
             res.status(403).json({ success: false })
