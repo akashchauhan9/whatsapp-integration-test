@@ -81,7 +81,6 @@ app.post('/webhook', async (req, res) => {
     
                     // const apiCall = await doPostRequest(url, payload, headers);
                     const apiCall = await axios(axiosObj)
-                    console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
                     return res.status(200).send(apiCall)
                 }
                 else {
@@ -96,6 +95,7 @@ app.post('/webhook', async (req, res) => {
             res.status(403).json({ success: false })
         }
     } catch (error) {
+        console.log("🚀 ~ file: index.js:99 ~ app.post ~ error:", error)
         return res.status(500).json({ error })
     }
 });
