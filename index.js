@@ -43,7 +43,7 @@ app.get('/webhook', async (req, res) => {
 app.post('/webhook', async (req, res) => {
     try {
         const body = req.body;
-        console.log("🚀 ~ file: index.js:45 ~ app.post ~ body:", body)
+        // console.log("🚀 ~ file: index.js:45 ~ app.post ~ body:", body)
 
         if (body.object) {
             // console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes:", body.entry[0].changes)
@@ -90,7 +90,7 @@ app.post('/webhook', async (req, res) => {
                 }
             }
             else {
-                console.log("🚀 ~ file: index.js:82 ~ app.post ~ out fail:")
+                console.log("🚀 ~ file: index.js:82 ~ app.post ~ out fail:", JSON.stringify(body))
                 return res.status(403).json({ success: false })
             }
         } else {
