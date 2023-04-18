@@ -85,7 +85,7 @@ app.post('/webhook', async (req, res) => {
                     return res.status(200).json({ success: true })
                 }
                 else {
-                    console.log("🚀 ~ file: index.js:79 ~ app.post ~ body.entry fail:")
+                    console.log("🚀 ~ file: index.js:79 ~ app.post ~ body.entry fail:", JSON.stringify(body))
                     return res.status(400).json({ success: false, msgBody })
                 }
             }
