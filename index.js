@@ -12,6 +12,8 @@ app.listen(8000 || process.env.PORT, () => {
     console.log('Webhook is listening');
 })
 
+app.get('/', (req, res) => {res.status(200).json({'message': 'OK'})});
+
 app.get('/webhook', async (req, res) => {
     const mode = req.query['hub.mode'];
     const challenge = req.query['hub.challenge'];
