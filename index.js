@@ -42,7 +42,7 @@ app.get('/webhook', async (req, res) => {
 app.post('/webhook', async (req, res) => {
     try {
         const body = req.body;
-        console.log(JSON.stringify(body, null, 2))
+        console.log("🚀 ~ file: index.js:45 ~ app.post ~ body:", JSON.stringify(body))
 
         if (body.object) {
             if (body.entry &&
@@ -59,7 +59,7 @@ app.post('/webhook', async (req, res) => {
                     messaging_product: 'whatsapp',
                     to: from,
                     text: {
-                        body: 'Hello World Boi'
+                        body: msgBody
                     }
                 };
                 const headers = {
