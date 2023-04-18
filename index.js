@@ -2,9 +2,11 @@ const functions = require('firebase-functions');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { doPostRequest } = require('./axiosApiCall');
+const { doPostRequest } = require('./app/utils/axiosApiCall');
 const { default: axios } = require('axios');
 const app = express().use(bodyParser.json());
+const User = require('./app/models/userModel');
+
 require('dotenv')
 const token = process.env.TOKEN;
 const myToken = process.env.MY_TOKEN;
@@ -60,34 +62,35 @@ app.post('/webhook', async (req, res) => {
                 console.log("🚀 ~ file: index.js:56 ~ app.post ~ from:", from)
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
+                const userExist = await User.findById({phone: from});
 
-                if(msgBody === 'Hi' || msgBody === 'Test') {
-                    const axiosObj = {
-                        method: 'POST',
-                        url: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
-                        data: {
-                            messaging_product: 'whatsapp',
-                            to: from,
-                            text: {
-                                body: "From Akash " + msgBody
-                            }
-                        },
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token 
+                let user;
+                if(!userExist) {
+                    user = new User(user);
+                    user = await user.save()
+                }
+                const axiosObj = {
+                    method: 'POST',
+                    url: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
+                    data: {
+                        messaging_product: 'whatsapp',
+                        to: from,
+                        text: {
+                            body: 'Invalid Text'
                         }
-                    };
-                    console.log("🚀 ~ file: index.js:92 ~ app.post ~ axiosObj:", axiosObj)
-    
-                    // const apiCall = await doPostRequest(url, payload, headers);
-                    const apiCall = await axios(axiosObj)
-                    console.log("🚀 ~ file: index.js:84 ~ app.post ~ apiCall:", apiCall)
-                    return res.status(200).json({ success: true })
+                    },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token 
+                    }
+                };
+                if(msgBody === 'Hi' || msgBody === 'Test') {
+                    axiosObj.data.text.body = 'This text is from Whatsapp Say Hi!!' + msgBody;
                 }
-                else {
-                    console.log("🚀 ~ file: index.js:79 ~ app.post ~ body.entry fail:", JSON.stringify(body))
-                    return res.status(400).json({ success: false, msgBody })
-                }
+                console.log("🚀 ~ file: index.js:92 ~ app.post ~ axiosObj:", axiosObj)
+                const apiCall = await axios(axiosObj)
+                console.log("🚀 ~ file: index.js:84 ~ app.post ~ apiCall:", apiCall)
+                return res.status(200).json({ success: true })
             }
             else {
                 console.log("🚀 ~ file: index.js:82 ~ app.post ~ out fail:", JSON.stringify(body))
