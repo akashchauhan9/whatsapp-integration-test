@@ -74,6 +74,7 @@ app.post('/webhook', async (req, res) => {
                 console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
 
                 const apiCall = await doPostRequest(url, payload, headers);
+                console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
                 res.status(200).send(apiCall)
             }
             else {
