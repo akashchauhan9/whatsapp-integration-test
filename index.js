@@ -62,21 +62,19 @@ app.post('/webhook', async (req, res) => {
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
 
                 if(msgBody === 'Hi' || msgBody === 'Test') {
-                    const url = 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token;
-                    const payload = {
-                        messaging_product: 'whatsapp',
-                        to: from,
-                        text: {
-                            body: "Hello from Akash"
-                        }
-                    };
-                    const headers = {
-                        'Content-Type': 'application/json'
-                    };
-                    console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
-    
-                    // const apiCall = await doPostRequest(url, payload, headers);
-                    const apiCall = await axios({
+                    // const url = 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages?access_token=' + token;
+                    // const payload = {
+                    //     messaging_product: 'whatsapp',
+                    //     to: from,
+                    //     text: {
+                    //         body: "Hello from Akash"
+                    //     }
+                    // };
+                    // const headers = {
+                    //     'Content-Type': 'application/json'
+                    // };
+                    // console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
+                    const axiosObj = {
                         method: 'POST',
                         urk: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
                         data: {
@@ -90,7 +88,11 @@ app.post('/webhook', async (req, res) => {
                             'Content-Type': 'application/json',
                             'Authorization': 'Bearer ' + token 
                         }
-                    })
+                    };
+                    console.log("🚀 ~ file: index.js:92 ~ app.post ~ axiosObj:", axiosObj)
+    
+                    // const apiCall = await doPostRequest(url, payload, headers);
+                    const apiCall = await axios(axiosObj)
                     console.log("🚀 ~ file: index.js:77 ~ app.post ~ apiCall:", apiCall)
                     return res.status(200).send(apiCall)
                 }
