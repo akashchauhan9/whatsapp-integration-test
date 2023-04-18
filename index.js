@@ -45,16 +45,23 @@ app.post('/webhook', async (req, res) => {
         console.log("🚀 ~ file: index.js:45 ~ app.post ~ body:", JSON.stringify(body))
 
         if (body.object) {
+
+            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages[0]:", body.entry[0].changes[0].value.messages[0])
+            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes[0].value.messages:", body.entry[0].changes[0].value.messages)
+            console.log("🚀 ~ file: index.js:52 ~ app.post ~ body.entry[0].changes:", body.entry[0].changes)
             if (body.entry &&
                 body.entry[0].changes &&
-                body.entry[0].changes[0].value.message &&
-                body.entry[0].changes[0].value.message[0]) {
+                body.entry[0].changes[0].value.messages &&
+                body.entry[0].changes[0].value.messages[0]) {
 
                 const phoneNoId = body.entry[0].changes[0].value.metadata.phone_number_id;
-                const from = body.entry[0].changes[0].value.message[0].from;
-                const msgBody = body.entry[0].changes[0].value.message[0].text.body;
+                console.log("🚀 ~ file: index.js:54 ~ app.post ~ phoneNoId:", phoneNoId)
+                const from = body.entry[0].changes[0].value.messages[0].from;
+                console.log("🚀 ~ file: index.js:56 ~ app.post ~ from:", from)
+                const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
+                console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
 
-                const url = 'https://graph.facebook.com/v16.0' + phoneNoId + '/message?access_token=' + token;
+                const url = 'https://graph.facebook.com/v16.0' + phoneNoId + '/messages?access_token=' + token;
                 const payload = {
                     messaging_product: 'whatsapp',
                     to: from,
@@ -65,6 +72,8 @@ app.post('/webhook', async (req, res) => {
                 const headers = {
                     'Content-Type': 'application/json'
                 };
+                console.log("🚀 ~ file: index.js:69 ~ app.post ~ url, payload, headers:", url, payload, headers)
+
                 const apiCall = await doPostRequest(url, payload, headers);
                 res.status(200).send(apiCall)
             }
