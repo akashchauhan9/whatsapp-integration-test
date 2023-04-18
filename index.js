@@ -62,7 +62,7 @@ app.post('/webhook', async (req, res) => {
                 console.log("🚀 ~ file: index.js:56 ~ app.post ~ from:", from)
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
-                const userExist = await User.findById({phone: from});
+                const userExist = await User.findOne({phone: from});
 
                 let user;
                 if(!userExist) {
