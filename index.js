@@ -148,6 +148,7 @@ app.post('/webhook', async (req, res) => {
 
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     if (msgBody === '1' || msgBody === '2') {
+                        console.log("🚀 ~ file: index.js:151 ~ app.post ~ msgBody:", msgBody)
                         userExist = user.find(el => el.mobile === from);
                         const index = user.indexOf(userExist);
                         userExist = {
@@ -181,6 +182,7 @@ app.post('/webhook', async (req, res) => {
                         }
                     }
                     else if (userExist.lang > 0) {
+                        console.log("🚀 ~ file: index.js:185 ~ app.post ~ userExist.lang:", userExist.lang)
                         let question;
                         question = userExist.lang === 1 ? enFormData[userExist.step - 1].Q : hiFormData[userExist.step - 1].Q;
                         axiosObj.data.text.body = question;
@@ -215,9 +217,13 @@ app.post('/webhook', async (req, res) => {
                         };
                         user.splice(index, 1);
                         user.push(userExist);
+                        userExist = user.find(el => el.mobile === from);
+                        console.log("🚀 ~ file: index.js:188 ~ app.post ~ userExist.step: left")
+
                     }
                     else {
                         axiosObj.data.text.body = 'Please choose correct option.'
+                        console.log("🚀 ~ file: index.js:223 ~ app.post ~ axiosObj:", axiosObj)
                         const index = user.indexOf(userExist)
                         // let userFormExist = userForm.find(el => el?.mobile === from);
                         let question;
