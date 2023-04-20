@@ -208,6 +208,9 @@ app.post('/webhook', async (req, res) => {
                         )
                     }
                 }
+                else if(userExist.step > formData.length) {
+                    axiosObj.data.text.body = "Thankyou for submitting the form."
+                }
                 console.log("🚀 ~ file: index.js:172 ~ app.post ~ userForm:", user)
 
                 console.log("🚀 ~ file: index.js:173 ~ app.post ~ userForm:", userForm)
