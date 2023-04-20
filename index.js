@@ -133,7 +133,10 @@ app.post('/webhook', async (req, res) => {
                         'Authorization': 'Bearer ' + token 
                     }
                 };
-                if(userExist.step>1) {
+                if(userExist.step >= formData.length) {
+                    axiosObj.data.text.body = "Thankyou for submitting the form."
+                }
+                else if(userExist.step>1) {
                     console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     let question;
@@ -205,9 +208,6 @@ app.post('/webhook', async (req, res) => {
                     user.splice(index, 1);
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
-                }
-                else if(userExist.step >= formData.length) {
-                    axiosObj.data.text.body = "Thankyou for submitting the form."
                 }
                 console.log("🚀 ~ file: index.js:172 ~ app.post ~ userForm:", user)
 
