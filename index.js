@@ -19,13 +19,13 @@ const user = [
     {
         "name": "Avnish",
         "mobile": "77858585895959",
-        "step": 1,
+        "step": 0,
         "lang": 0
     },
     {
         "name": "Akash",
-        "mobile": "9582615259",
-        "step": 1,
+        "mobile": "919582615259",
+        "step": 0,
         "lang": 0
     }
 ];
