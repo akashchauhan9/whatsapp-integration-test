@@ -135,7 +135,7 @@ app.post('/webhook', async (req, res) => {
                         'Authorization': 'Bearer ' + token 
                     }
                 };
-                if(userExist.step>0) {
+                if(userExist.step>1) {
                     console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     let question;
