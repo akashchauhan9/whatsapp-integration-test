@@ -133,7 +133,7 @@ app.post('/webhook', async (req, res) => {
                         'Authorization': 'Bearer ' + token 
                     }
                 };
-                if(userExist.step >= formData.length) {
+                if(userExist.step > formData.length) {
                     axiosObj.data.text.body = "Thankyou for submitting the form."
                 }
                 else if(userExist.step>1) {
