@@ -142,14 +142,6 @@ app.post('/webhook', async (req, res) => {
                     question = formData[userExist.step-1].Q;
                     axiosObj.data.text.body = question;
 
-                    const index = user.indexOf(userExist);
-                    userExist = {
-                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
-                        mobile: from,
-                        step: userExist.step + 1
-                    };
-                    user.splice(index, 1);
-                    user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
                     if(userFormExist) {
                         const userFormIndex = userForm.indexOf(userFormExist);
@@ -171,18 +163,18 @@ app.post('/webhook', async (req, res) => {
                             }
                         )
                     }
+                    const index = user.indexOf(userExist);
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: userExist.step + 1
+                    };
+                    user.splice(index, 1);
+                    user.push(userExist);
                 }
                 else if(msgBody === 'Hi' || msgBody === 'Test') {
                     console.log("🚀 ~ file: index.js:149 ~ app.post ~ msgBody:", msgBody)
                     const index = user.indexOf(userExist)
-                    userExist = {
-                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
-                        mobile: from,
-                        step: 2
-                    };
-                    user.splice(index, 1);
-                    user.push(userExist);
-                    userExist = user.find(el => el.mobile === from);
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     let question;
                     question = formData[userExist.step-1].Q;
@@ -207,6 +199,14 @@ app.post('/webhook', async (req, res) => {
                             }
                         )
                     }
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: 2
+                    };
+                    user.splice(index, 1);
+                    user.push(userExist);
+                    userExist = user.find(el => el.mobile === from);
                 }
                 else if(userExist.step > formData.length) {
                     axiosObj.data.text.body = "Thankyou for submitting the form."
