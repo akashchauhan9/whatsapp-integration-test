@@ -28,22 +28,45 @@ app.listen(8080 || env.PORT, () => {
 
 const user = [
     {
-        "email": "avnish@gmail.com",
-        "firstName": "Avnish",
-        "lastName": "yadav",
+        "name": "Avnish",
         "mobile": "77858585895959",
-        "dob":"2023/4/4",
         "step": 0
     },
     {
-        "email": "akash@gmail.com",
-        "firstName": "Akash",
-        "lastName": "Chauhan",
+        "name": "Akash",
         "mobile": "9582615259",
-        "dob":"2023/4/4",
         "step": 0
     }
 ];
+
+const userForm = []
+
+const formData = [
+    {
+        "Q": "Whats your name",
+        "ANS": ""
+    },
+    {
+        "Q": "Whats your DOB",
+        "ANS": ""
+    },
+    {
+        "Q": "Whats your roll",
+        "ANS": {
+            "1": "User",
+            "2": "Admin"
+        }
+    },
+    {
+        "Q": "Whats your qualification",
+        "ANS": {
+            "1": "10",
+            "2": "12",
+            "3": "Diploma",
+            "4": "Under Graduate"
+        }
+    }
+]
 
 app.get('/', (req, res) => { res.status(200).json({ 'message': 'OK' }) });
 
@@ -93,13 +116,20 @@ app.post('/webhook', async (req, res) => {
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
                 console.log("🚀 ~ file: index.js:58 ~ app.post ~ msgBody:", msgBody)
                 // const userExist = await User.findOne({phone: from});
-                // const userExist = user.find(el => el.mobile === from);
+                let userExist = user.find(el => el.mobile === from);
 
                 // // let user;
-                // if(!userExist) {
-                //     // user = new User(user);
-                //     // user = await user.save()
-                // }
+                if(!userExist) {
+                    // user = new User(user);
+                    // user = await user.save()
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: 0
+                    };
+                    user.push(userExist);
+                    userExist = user.find(el => el.mobile === from);
+                }
                 const axiosObj = {
                     method: 'POST',
                     url: 'https://graph.facebook.com/v16.0/' + phoneNoId + '/messages',
@@ -116,7 +146,52 @@ app.post('/webhook', async (req, res) => {
                     }
                 };
                 if(msgBody === 'Hi' || msgBody === 'Test') {
-                    axiosObj.data.text.body = 'This text is from Whatsapp Say Hi!!' + msgBody;
+                    axiosObj.data.text.body = 'This text is from Service Plus. To initiate the chat. Say, Hi!!';
+                    const index = user.indexOf(userExist)
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: 1
+                    };
+                    user.splice(index, 1);
+                    user.push(userExist);
+                    userExist = user.find(el => el.mobile === from);
+                }
+                else if(userExist.step>0) {
+                    let userFormExist = userForm.find(el => el?.mobile === from);
+                    let question;
+                    question = formData[userExist.step-1].Q;
+                    axiosObj.data.text.body = question;
+
+                    const index = user.indexOf(userExist);
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: userExist.step + 1
+                    };
+                    user.splice(index, 1);
+                    user.push(userExist);
+                    userExist = user.find(el => el.mobile === from);
+                    if(userFormExist) {
+                        const userFormIndex = userForm.indexOf(userFormExist);
+                        userForm[userFormIndex].questionAnswer.push({
+                            [`Q${userExist.step}`]: formData[userExist.step-1].Q,
+                            [`A${userExist.step}`]: msgBody
+                        })
+                    }
+                    else {
+                        userForm.push(
+                            {
+                                mobile: from,
+                                questionAnswer: [
+                                    {
+                                        [`Q${userExist.step}`]: formData[userExist.step-1].Q,
+                                        [`A${userExist.step}`]: msgBody
+                                    }
+                                ]
+                            }
+                        )
+                    }
                 }
                 console.log("🚀 ~ file: index.js:92 ~ app.post ~ axiosObj:", axiosObj)
                 const apiCall = await axios(axiosObj)
