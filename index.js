@@ -134,21 +134,22 @@ app.post('/webhook', async (req, res) => {
                         'Authorization': 'Bearer ' + token 
                     }
                 };
-                if(msgBody === 'Hi' || msgBody === 'Test') {
-                    console.log("🚀 ~ file: index.js:149 ~ app.post ~ msgBody:", msgBody)
-                    const index = user.indexOf(userExist)
-                    userExist = {
-                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
-                        mobile: from,
-                        step: 1
-                    };
-                    user.splice(index, 1);
-                    user.push(userExist);
-                    userExist = user.find(el => el.mobile === from);
+                if(userExist.step>0) {
+                    console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     let question;
                     question = formData[userExist.step-1].Q;
                     axiosObj.data.text.body = question;
+
+                    const index = user.indexOf(userExist);
+                    userExist = {
+                        name: body.entry[0].changes[0].value.contacts[0].profile.name,
+                        mobile: from,
+                        step: userExist.step + 1
+                    };
+                    user.splice(index, 1);
+                    user.push(userExist);
+                    userExist = user.find(el => el.mobile === from);
                     if(userFormExist) {
                         const userFormIndex = userForm.indexOf(userFormExist);
                         userForm[userFormIndex].questionAnswer.push({
@@ -170,22 +171,21 @@ app.post('/webhook', async (req, res) => {
                         )
                     }
                 }
-                else if(userExist.step>0) {
-                    console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
-                    let userFormExist = userForm.find(el => el?.mobile === from);
-                    let question;
-                    question = formData[userExist.step-1].Q;
-                    axiosObj.data.text.body = question;
-
-                    const index = user.indexOf(userExist);
+                else if(msgBody === 'Hi' || msgBody === 'Test') {
+                    console.log("🚀 ~ file: index.js:149 ~ app.post ~ msgBody:", msgBody)
+                    const index = user.indexOf(userExist)
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
                         mobile: from,
-                        step: userExist.step + 1
+                        step: 1
                     };
                     user.splice(index, 1);
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
+                    let userFormExist = userForm.find(el => el?.mobile === from);
+                    let question;
+                    question = formData[userExist.step-1].Q;
+                    axiosObj.data.text.body = question;
                     if(userFormExist) {
                         const userFormIndex = userForm.indexOf(userFormExist);
                         userForm[userFormIndex].questionAnswer.push({
