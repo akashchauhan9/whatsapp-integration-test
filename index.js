@@ -33,11 +33,9 @@ const userForm = []
 const formData = [
     {
         "Q": "Whats your name",
-        "ANS": ""
     },
     {
         "Q": "Whats your DOB",
-        "ANS": ""
     },
     {
         "Q": "Whats your roll",
@@ -208,7 +206,7 @@ app.post('/webhook', async (req, res) => {
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
                 }
-                else if(userExist.step > formData.length) {
+                else if(userExist.step >= formData.length) {
                     axiosObj.data.text.body = "Thankyou for submitting the form."
                 }
                 console.log("🚀 ~ file: index.js:172 ~ app.post ~ userForm:", user)
