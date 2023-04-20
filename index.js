@@ -154,7 +154,7 @@ app.post('/webhook', async (req, res) => {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
                             mobile: from,
                             step: 1,
-                            lang: msgBody
+                            lang: Number(msgBody)
                         };
                         user.splice(index, 1);
                         user.push(userExist);
