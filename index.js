@@ -19,12 +19,12 @@ const user = [
     {
         "name": "Avnish",
         "mobile": "77858585895959",
-        "step": 0
+        "step": 1
     },
     {
         "name": "Akash",
         "mobile": "9582615259",
-        "step": 0
+        "step": 1
     }
 ];
 
@@ -114,7 +114,7 @@ app.post('/webhook', async (req, res) => {
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
                         mobile: from,
-                        step: 0
+                        step: 1
                     };
                     user.push(userExist);
                     console.log("🚀 ~ file: index.js:120 ~ app.post ~ user:", user)
@@ -178,7 +178,7 @@ app.post('/webhook', async (req, res) => {
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
                         mobile: from,
-                        step: 1
+                        step: 2
                     };
                     user.splice(index, 1);
                     user.push(userExist);
