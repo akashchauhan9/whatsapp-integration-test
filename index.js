@@ -158,6 +158,7 @@ app.post('/webhook', async (req, res) => {
                         };
                         user.splice(index, 1);
                         user.push(userExist);
+                        userExist = user.find(el => el.mobile === from);
                         if (userFormExist) {
                             const userFormIndex = userForm.indexOf(userFormExist);
                             userForm[userFormIndex].questionAnswer.push({
