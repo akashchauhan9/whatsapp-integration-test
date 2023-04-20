@@ -137,7 +137,7 @@ app.post('/webhook', async (req, res) => {
                         messaging_product: 'whatsapp',
                         to: from,
                         text: {
-                            body: 'Invalid Text'
+                            body: 'This text is from Service Plus. To initiate the chat. Say, Hi!!'
                         }
                     },
                     headers: {
@@ -146,7 +146,7 @@ app.post('/webhook', async (req, res) => {
                     }
                 };
                 if(msgBody === 'Hi' || msgBody === 'Test') {
-                    axiosObj.data.text.body = 'This text is from Service Plus. To initiate the chat. Say, Hi!!';
+                    console.log("🚀 ~ file: index.js:149 ~ app.post ~ msgBody:", msgBody)
                     const index = user.indexOf(userExist)
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
@@ -156,8 +156,33 @@ app.post('/webhook', async (req, res) => {
                     user.splice(index, 1);
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
+                    let userFormExist = userForm.find(el => el?.mobile === from);
+                    let question;
+                    question = formData[userExist.step-1].Q;
+                    axiosObj.data.text.body = question;
+                    if(userFormExist) {
+                        const userFormIndex = userForm.indexOf(userFormExist);
+                        userForm[userFormIndex].questionAnswer.push({
+                            [`Q${userExist.step}`]: formData[userExist.step-1].Q,
+                            [`A${userExist.step}`]: msgBody
+                        })
+                    }
+                    else {
+                        userForm.push(
+                            {
+                                mobile: from,
+                                questionAnswer: [
+                                    {
+                                        [`Q${userExist.step}`]: formData[userExist.step-1].Q,
+                                        [`A${userExist.step}`]: msgBody
+                                    }
+                                ]
+                            }
+                        )
+                    }
                 }
                 else if(userExist.step>0) {
+                    console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     let question;
                     question = formData[userExist.step-1].Q;
