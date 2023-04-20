@@ -154,7 +154,7 @@ app.post('/webhook', async (req, res) => {
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
                             mobile: from,
-                            step: 1,
+                            step: 2,
                             lang: Number(msgBody)
                         };
                         user.splice(index, 1);
@@ -180,6 +180,10 @@ app.post('/webhook', async (req, res) => {
                                 }
                             )
                         }
+                        let question;
+                        question = userExist.lang === 1 ? enFormData[userExist.step - 1].Q : hiFormData[userExist.step - 1].Q;
+                        axiosObj.data.text.body = question;
+
                     }
                     else if (userExist.lang > 0) {
                         console.log("🚀 ~ file: index.js:185 ~ app.post ~ userExist.lang:", userExist.lang)
