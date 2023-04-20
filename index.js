@@ -108,6 +108,7 @@ app.post('/webhook', async (req, res) => {
                 const phoneNoId = body.entry[0].changes[0].value.metadata.phone_number_id;
                 const from = body.entry[0].changes[0].value.messages[0].from;
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
+                console.log("🚀 ~ file: index.js:111 ~ app.post ~ msgBody:", msgBody)
                 // const userExist = await User.findOne({phone: from});
                 let userExist = user.find(el => el.mobile === from);
 
@@ -187,7 +188,7 @@ app.post('/webhook', async (req, res) => {
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
                             mobile: from,
-                            step: userExist.step,
+                            step: 1,
                             lang: msgBody
                         };
                         user.splice(index, 1);
@@ -223,9 +224,7 @@ app.post('/webhook', async (req, res) => {
 
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
-                            mobile: from,
-                            step: 1,
-                            lang: 0
+                            mobile: from
                         };
                         user.splice(index, 1);
                         user.push(userExist);
@@ -243,8 +242,7 @@ app.post('/webhook', async (req, res) => {
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
                         mobile: from,
-                        step: 1,
-                        lang: 0
+                        step: 1
                     };
                     user.splice(index, 1);
                     user.push(userExist);
