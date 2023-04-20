@@ -177,7 +177,8 @@ app.post('/webhook', async (req, res) => {
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
                             mobile: from,
-                            step: userExist.step + 1
+                            step: userExist.step + 1,
+                            lang: userExist.lang
                         };
                         user.splice(index, 1);
                         user.push(userExist);
@@ -224,7 +225,9 @@ app.post('/webhook', async (req, res) => {
 
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
-                            mobile: from
+                            mobile: from,
+                            step: 0,
+                            lang: 0
                         };
                         user.splice(index, 1);
                         user.push(userExist);
