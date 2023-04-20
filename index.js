@@ -117,6 +117,7 @@ app.post('/webhook', async (req, res) => {
                         step: 0
                     };
                     user.push(userExist);
+                    console.log("🚀 ~ file: index.js:120 ~ app.post ~ user:", user)
                     userExist = user.find(el => el.mobile === from);
                 }
                 const axiosObj = {
@@ -207,6 +208,9 @@ app.post('/webhook', async (req, res) => {
                         )
                     }
                 }
+                console.log("🚀 ~ file: index.js:172 ~ app.post ~ userForm:", user)
+
+                console.log("🚀 ~ file: index.js:173 ~ app.post ~ userForm:", userForm)
                 console.log("🚀 ~ file: index.js:92 ~ app.post ~ axiosObj:", axiosObj)
                 const apiCall = await axios(axiosObj)
                 console.log("🚀 ~ file: index.js:84 ~ app.post ~ apiCall:", apiCall)
