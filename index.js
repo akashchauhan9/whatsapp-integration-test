@@ -30,6 +30,11 @@ const user = [
 
 const userForm = []
 
+const ThankyouMessage = {
+    en: "Thankyou for submitting the form.",
+    hi: "फॉर्म जमा करने के लिए धन्यवाद।"
+}
+
 const langForm = [
     {
         "Q": "Choose Language. 1 For English, 2 For हिंदी"
@@ -139,7 +144,7 @@ app.post('/webhook', async (req, res) => {
                     }
                 };
                 if (userExist.step > enFormData.length) {
-                    axiosObj.data.text.body = "Thankyou for submitting the form."
+                    axiosObj.data.text.body = userExist.lang === 1 ? ThankyouMessage.en : ThankyouMessage.hi
                 }
                 else if (userExist.step > 0) {
                     console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
