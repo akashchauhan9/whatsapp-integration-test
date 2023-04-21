@@ -145,7 +145,7 @@ app.post('/webhook', async (req, res) => {
                     console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
 
                     let userFormExist = userForm.find(el => el?.mobile === from);
-                    if (msgBody === '1' || msgBody === '2') {
+                    if ((msgBody === '1' || msgBody === '2') && (!userExist.lang)) {
                         console.log("🚀 ~ file: index.js:152 ~ app.post ~ msgBody:", msgBody)
                         userExist = user.find(el => el.mobile === from);
                         const index = user.indexOf(userExist);
