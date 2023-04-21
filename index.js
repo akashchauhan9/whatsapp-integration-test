@@ -19,14 +19,12 @@ const user = [
     {
         "name": "Avnish",
         "mobile": "77858585895959",
-        "step": 0,
-        "lang": 0
+        "step": 0
     },
     {
         "name": "Akash",
         "mobile": "919582615259",
-        "step": 0,
-        "lang": 0
+        "step": 0
     }
 ];
 
@@ -235,7 +233,6 @@ app.post('/webhook', async (req, res) => {
                     }
                     else {
                         axiosObj.data.text.body = 'Please choose correct option.'
-                        console.log("🚀 ~ file: index.js:223 ~ app.post ~ axiosObj:", axiosObj)
                         const index = user.indexOf(userExist)
                         // let userFormExist = userForm.find(el => el?.mobile === from);
                         let question;
@@ -245,7 +242,7 @@ app.post('/webhook', async (req, res) => {
                         userExist = {
                             name: body.entry[0].changes[0].value.contacts[0].profile.name,
                             mobile: from,
-                            step: 0,
+                            step: 1,
                             lang: 0
                         };
                         user.splice(index, 1);
@@ -264,7 +261,8 @@ app.post('/webhook', async (req, res) => {
                     userExist = {
                         name: body.entry[0].changes[0].value.contacts[0].profile.name,
                         mobile: from,
-                        step: 1
+                        step: 1,
+                        lang: 0
                     };
                     user.splice(index, 1);
                     user.push(userExist);
