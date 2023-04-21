@@ -37,7 +37,7 @@ const ThankyouMessage = {
 
 const langForm = [
     {
-        "Q": "Choose Language. 1 For English, 2 For हिंदी"
+        "Q": "Choose Language.\n1 For English\n2 For हिंदी"
     }
 ]
 const enFormData = [
