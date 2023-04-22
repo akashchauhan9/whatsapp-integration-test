@@ -31,8 +31,8 @@ const user = [
 const userForm = []
 
 const ThankyouMessage = {
-    en: "Thankyou for submitting the form.",
-    hi: "फॉर्म जमा करने के लिए धन्यवाद।"
+    en: "Your form is submitted successfully.\nThankyou",
+    hi: "आपका फॉर्म सफलतापूर्वक जमा हो गया है।\nधन्यवाद"
 }
 
 const langForm = [
