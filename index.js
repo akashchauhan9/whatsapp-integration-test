@@ -290,6 +290,7 @@ app.post('/webhook', async (req, res) => {
                     user.splice(index, 1);
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
+                    console.log("🚀 ~ file: index.js:293 ~ app.post ~ userExist:", userExist)
                 }
                 const apiCall = await axios(axiosObj)
                 return res.status(200).json({ success: true })
