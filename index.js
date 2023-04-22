@@ -129,7 +129,6 @@ app.post('/webhook', async (req, res) => {
                 const phoneNoId = body.entry[0].changes[0].value.metadata.phone_number_id;
                 const from = body.entry[0].changes[0].value.messages[0].from;
                 const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
-                console.log("🚀 ~ file: index.js:111 ~ app.post ~ msgBody:", msgBody)
                 // const userExist = await User.findOne({phone: from});
                 let userExist = user.find(el => el.mobile === from);
 
@@ -163,13 +162,11 @@ app.post('/webhook', async (req, res) => {
                 };
                 if (userExist.step > enFormData.length) {
                     axiosObj.data.text.body = userExist.lang === 1 ? ThankyouMessage.en : ThankyouMessage.hi
+                    console.log("🚀 ~ file: index.js:165 ~ app.post ~ userExist:", userExist)
                 }
                 else if (userExist.step > 0) {
-                    console.log("🚀 ~ file: index.js:161 ~ app.post ~ userExist.step:", userExist.step)
-
                     let userFormExist = userForm.find(el => el?.mobile === from);
                     if ((msgBody === '1' || msgBody === '2') && (!userExist.lang)) {
-                        console.log("🚀 ~ file: index.js:152 ~ app.post ~ msgBody:", msgBody)
                         userExist = user.find(el => el.mobile === from);
                         const index = user.indexOf(userExist);
                         userExist = {
@@ -215,7 +212,6 @@ app.post('/webhook', async (req, res) => {
                         userExist = user.find(el => el.mobile === from);
                     }
                     else if (userExist.lang > 0) {
-                        console.log("🚀 ~ file: index.js:185 ~ app.post ~ userExist.lang:", userExist.lang)
                         let question;
                         question = userExist.lang === 1 ? enFormData[userExist.step - 1].Q : hiFormData[userExist.step - 1].Q;
                         axiosObj.data.text.body = question;
@@ -251,8 +247,6 @@ app.post('/webhook', async (req, res) => {
                         user.splice(index, 1);
                         user.push(userExist);
                         userExist = user.find(el => el.mobile === from);
-                        console.log("🚀 ~ file: index.js:188 ~ app.post ~ userExist.step: left")
-
                     }
                     else {
                         axiosObj.data.text.body = 'Please choose correct option.'
@@ -290,7 +284,6 @@ app.post('/webhook', async (req, res) => {
                     user.splice(index, 1);
                     user.push(userExist);
                     userExist = user.find(el => el.mobile === from);
-                    console.log("🚀 ~ file: index.js:293 ~ app.post ~ userExist:", userExist)
                 }
                 const apiCall = await axios(axiosObj)
                 return res.status(200).json({ success: true })
