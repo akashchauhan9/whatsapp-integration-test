@@ -37,36 +37,54 @@ const ThankyouMessage = {
 
 const langForm = [
     {
-        "Q": "Choose Language.\n1 For English\n2 For हिंदी"
+        "Q": "Welcome to Jammu and Kashmir e-Governance Agency(JaKeGa)\nChoose Language.\n1 For English\n2 For हिंदी"
     }
 ]
 const enFormData = [
     {
-        "Q": "What is your name"
+        "Q": "What is your name?"
     },
     {
-        "Q": "What is your DOB"
+        "Q": "What is your DOB?"
     },
     {
-        "Q": "What is your roll number"
+        "Q": "What is your gender?"
     },
     {
-        "Q": "What is your qualification"
+        "Q": "What is your father's name?"
+    },
+    {
+        "Q": "What is your mother's name?"
+    },
+    {
+        "Q": "What is your address?"
+    },
+    {
+        "Q": "What is your place of birth?"
     }
 ]
 
 const hiFormData = [
     {
-        "Q": "आपका क्या नाम है"
+        "Q": "आपका क्या नाम है?"
     },
     {
-        "Q": "आपका DOB क्या है"
+        "Q": "आपका DOB क्या है?"
     },
     {
-        "Q": "आपका रोल नंबर क्या है"
+        "Q": "आपका लिंग क्या है?"
     },
     {
-        "Q": "आपकी उच्च योग्यता क्या है"
+        "Q": "आपके पिता का क्या नाम है?"
+    },
+    {
+        "Q": "आपकी माँ का नाम क्या है?"
+    },
+    {
+        "Q": "आपका पता क्या है?"
+    },
+    {
+        "Q": "आपका जन्म स्थान क्या है?"
     }
 ]
 
@@ -135,7 +153,7 @@ app.post('/webhook', async (req, res) => {
                         messaging_product: 'whatsapp',
                         to: from,
                         text: {
-                            body: 'Welcome to JaKeGa. To initiate the chat. Say, Hi!!'
+                            body: 'Welcome to Jammu and Kashmir e-Governance Agency(JaKeGa). To initiate the chat. Say, Hi'
                         }
                     },
                     headers: {
